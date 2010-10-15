@@ -1,0 +1,362 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Membase.Management</name>
+    </assembly>
+    <members>
+        <member name="T:Membase.Management.BucketCreationDetails">
+            <summary>
+            Bucket creation detail parameter object.
+            </summary>
+        </member>
+        <member name="M:Membase.Management.BucketCreationDetails.PasswordProtectedMemcacheBucket(System.String,System.Int32)">
+            <summary>
+            Creates a memcache BucketCreationDetails instance that is SASL password protected.
+            The password is the same as the bucket name.
+            </summary>
+            <param name="bucketName">The new bucket name</param>
+            <param name="size">The size of the bucket in MB</param>
+            <returns>The new instance</returns>
+        </member>
+        <member name="M:Membase.Management.BucketCreationDetails.PasswordProtectedMemcacheBucket(System.String,System.String,System.Int32)">
+            <summary>
+            Creates a memcache BucketCreationDetails instance that is SASL password protected.
+            </summary>
+            <param name="bucketName">The new bucket name</param>
+            <param name="password">The bucket password</param>
+            <param name="size">The size of the bucket in MB</param>
+            <returns>The new instance</returns>
+        </member>
+        <member name="M:Membase.Management.BucketCreationDetails.PasswordProtectedMembaseBucket(System.String,System.String,System.Int32)">
+            <summary>
+            Creates a membase BucketCreationDetails instance that is SASL password protected.
+            </summary>
+            <param name="bucketName">The new bucket name</param>
+            <param name="password">The bucket password</param>
+            <param name="size">The size of the bucket in MB</param>
+            <returns>The new instance</returns>
+        </member>
+        <member name="M:Membase.Management.BucketCreationDetails.PortBasedMembaseBucket(System.String,System.Int32,System.Int32)">
+            <summary>
+            Creates a membase BucketCreationDetails instance that is unprotected on 
+            a specific port.
+            </summary>
+            <param name="bucketName">The new bucket name</param>
+            <param name="port">The bucket port</param>
+            <param name="size">The size of the bucket in MB</param>
+            <returns>The new instance</returns>
+        </member>
+        <member name="M:Membase.Management.BucketCreationDetails.PortBasedMemcacheBucket(System.String,System.Int32,System.Int32)">
+            <summary>
+            Creates a memcache BucketCreationDetails instance that is unprotected on 
+            a specific port.
+            </summary>
+            <param name="bucketName">The new bucket name</param>
+            <param name="port">The bucket port</param>
+            <param name="size">The size of the bucket in MB</param>
+            <returns>The new instance</returns>
+        </member>
+        <member name="P:Membase.Management.BucketCreationDetails.BucketName">
+            <summary>
+            The name of the bucket
+            </summary>
+        </member>
+        <member name="P:Membase.Management.BucketCreationDetails.Size">
+            <summary>
+            The size of the bucket, must be at least 64MB
+            </summary>
+        </member>
+        <member name="P:Membase.Management.BucketCreationDetails.AuthType">
+            <summary>
+            The authentication type the bucket should use.
+            </summary>
+        </member>
+        <member name="P:Membase.Management.BucketCreationDetails.BucketType">
+            <summary>
+            The type of bucket to create, either membase or memcache.
+            </summary>
+        </member>
+        <member name="P:Membase.Management.BucketCreationDetails.SaslPassword">
+            <summary>
+            The SASL password. Only valid when proxy port is not set.
+            </summary>
+        </member>
+        <member name="P:Membase.Management.BucketCreationDetails.ReplicaNumber">
+            <summary>
+            The replica number.
+            </summary>
+        </member>
+        <member name="P:Membase.Management.BucketCreationDetails.ProxyPort">
+            <summary>
+            The proxy port, required when SASL is not used.
+            </summary>
+        </member>
+        <member name="T:Membase.Management.Impl.ManagementClientPool">
+            <summary>
+            Thread safe pool of ManagementClient instances.
+            </summary>
+        </member>
+        <member name="M:Membase.Management.Impl.ManagementClientPool.#ctor(System.Collections.Generic.IEnumerable{Membase.Management.IMembaseManagementClient})">
+            <summary>
+            Creates a pool of management clients.
+            </summary>
+            <param name="clients">List of clients to initialize the pool with</param>
+        </member>
+        <member name="M:Membase.Management.Impl.ManagementClientPool.HandleClientFailure(Membase.Management.IMembaseManagementClient)">
+            <summary>
+            This should be called when a client call failed with a connection exception.
+            This will then go to the next available client in the client list for 
+            GetCurrentClient().
+            </summary>
+            <param name="failedClient">The client instance that failed.</param>
+        </member>
+        <member name="M:Membase.Management.Impl.ManagementClientPool.GetCurrentClient">
+            <summary>
+            Gets the current client to use.
+            </summary>
+        </member>
+        <member name="M:Membase.Management.Impl.ManagementClientPool.GetCurrentClientContainer">
+            <summary>
+            Gets the current client wrapped in a meta-data container.
+            </summary>
+        </member>
+        <member name="P:Membase.Management.Impl.ManagementClientPool.Count">
+            <summary>
+            The number of clients in the pool.
+            </summary>
+        </member>
+        <member name="P:Membase.Management.Impl.ManagementClientPool.MaxFailuresPerClient">
+            <summary>
+            The maximum number of failures per client in the pool.  The default is 10.
+            </summary>
+        </member>
+        <member name="T:Membase.Management.Impl.PooledManagementClient">
+            <summary>
+            Pooled client that will retry a management invocation on the subsequent client if needed.
+            </summary>
+        </member>
+        <member name="T:Membase.Management.IMembaseManagementClient">
+            <summary>
+            Represents a thread safe client instance.
+            </summary>
+        </member>
+        <member name="M:Membase.Management.IMembaseManagementClient.GetDefaultPool">
+            <summary>
+            Gets the default pool information. Good for checking server connectivity.
+            </summary>
+            <exception cref="T:Membase.Management.MembaseManagementException">
+            A connection error occurred or the server version is not compatible.
+            </exception>
+        </member>
+        <member name="M:Membase.Management.IMembaseManagementClient.GetBucket(System.String)">
+            <summary>
+            Get the specified bucket by name if it exists in the default pool.
+            </summary>
+            <param name="bucketName">The name of the bucket</param>
+            <returns>The bucket details</returns>
+            <exception cref="T:Membase.Management.MembaseManagementException">
+            A connection error occurred or the bucket does not exist.
+            </exception>
+        </member>
+        <member name="M:Membase.Management.IMembaseManagementClient.DeleteBucket(System.String)">
+            <summary>
+            Deletes the specified bucket.
+            </summary>
+            <param name="bucketName"></param>
+            <exception cref="T:Membase.Management.Impl.MembaseManagementRestException">
+            The bucket does not exist.
+            </exception>
+            <exception cref="T:Membase.Management.MembaseManagementException">
+            An error occurred.
+            </exception>
+        </member>
+        <member name="M:Membase.Management.IMembaseManagementClient.BucketExists(System.String)">
+            <summary>
+            Checks to see if the specified bucket exists in the default pool.
+            </summary>
+            <param name="bucketName">The bucket name</param>
+            <returns>True if the bucket exists, otherwise false</returns>
+            <exception cref="T:Membase.Management.MembaseManagementException">
+            An error occurred.
+            </exception>
+        </member>
+        <member name="M:Membase.Management.IMembaseManagementClient.CreateBucket(Membase.Management.BucketCreationDetails)">
+            <summary>
+            Create a new memcache or membase bucket in the default pool.
+            </summary>
+            <param name="bucketCreationDetails">The bucket creation info</param>
+            <exception cref="T:Membase.Management.MembaseManagementException">
+            An error occurred.
+            </exception>
+        </member>
+        <member name="M:Membase.Management.IMembaseManagementClient.FlushBucket(System.String)">
+            <summary>
+            Flushes all values from the memcache or membase bucket.
+            </summary>
+            <param name="bucketName">The name of the bucket to flush</param>
+        </member>
+        <member name="P:Membase.Management.IMembaseManagementClient.Endpoint">
+            <summary>
+            The Membase management endpoint Uri.
+            </summary>
+        </member>
+        <member name="T:Membase.Management.Impl.HttpMethod">
+            <summary>
+            Type safe enum for HTTP methods
+            </summary>
+        </member>
+        <member name="T:Membase.Management.Impl.RestResponse">
+            <summary>
+            The result of a REST call to the Membase management server.
+            </summary>
+        </member>
+        <member name="P:Membase.Management.Impl.RestResponse.StatusCode">
+            <summary>
+            The HTTP status code of the response.
+            </summary>
+        </member>
+        <member name="P:Membase.Management.Impl.RestResponse.Body">
+            <summary>
+            The response body.
+            </summary>
+            <remarks>
+            This could be JSON or plain text.
+            </remarks>
+        </member>
+        <member name="P:Membase.Management.Impl.RestResponse.IsError">
+            <summary>
+            Returns true if the StatusCode is a negative (400 or higher) response.
+            </summary>
+        </member>
+        <member name="T:Membase.Management.Impl.IRestClient">
+            <summary>
+            Generic interface for interacting with remote REST based services.
+            </summary>
+        </member>
+        <member name="M:Membase.Management.Impl.IRestClient.Get(System.String)">
+            <summary>
+            Perform a GET on the remote service.
+            </summary>
+            <param name="resourcePath">The relative resource path</param>
+            <returns>The returned resource</returns>
+            <exception cref="T:Membase.Management.Impl.MembaseManagementConnectionException">
+            Thrown when unable to connect to the remote Membase managment server.
+            </exception>
+        </member>
+        <member name="M:Membase.Management.Impl.IRestClient.Post(System.String,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Perform a POST to the remote service using the specified data parameters.
+            </summary>
+            <param name="resourceUri">The relative resource path</param>
+            <param name="parameters">The form body values</param>
+            <exception cref="T:Membase.Management.Impl.MembaseManagementConnectionException">
+            Thrown when unable to connect to the remote Membase managment server.
+            </exception>
+        </member>
+        <member name="M:Membase.Management.Impl.IRestClient.Delete(System.String)">
+            <summary>
+            Perform a DELETE on the remote service uri.
+            </summary>
+            <param name="endpoint">The relative resource path to delete</param>
+            <exception cref="T:Membase.Management.Impl.MembaseManagementConnectionException">
+            Thrown when unable to connect to the remote Membase managment server.
+            </exception>
+        </member>
+        <member name="P:Membase.Management.Impl.IRestClient.Endpoint">
+            <summary>
+            The REST base uri endpoint
+            </summary>
+        </member>
+        <member name="T:Membase.Management.MembaseManagementException">
+            <summary>
+            Base membase management exeption type.
+            </summary>
+        </member>
+        <member name="T:Membase.Management.Impl.ParameterBuilder">
+            <summary>
+            Builds a querystring from a dictionary of key-value pairs.
+            </summary>
+        </member>
+        <member name="M:Membase.Management.Impl.ParameterBuilder.DictionaryToUriEncodedString(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
+            <summary>
+            Builds a URL Encoded querystring
+            </summary>
+            <remarks>
+            if parameters is null, an empty string is returned
+            </remarks>
+            <param name="parameters">The key-value pairs</param>
+            <returns>The querystring if parameters was not null</returns>
+        </member>
+        <member name="T:Membase.Management.Impl.RestClient">
+            <summary>
+            Default REST client implmentation
+            </summary>
+        </member>
+        <member name="T:Membase.Management.MembaseManagementClientFactory">
+            <summary>
+            Factory for creating IMembaseManagementClient instances.
+            </summary>
+        </member>
+        <member name="M:Membase.Management.MembaseManagementClientFactory.Create(System.String,System.String)">
+            <summary>
+            Creates a single client that does not support a pool. The endpoint is defaulted to
+            the DefaultManagementUri on the localhost.
+            </summary>
+            <param name="adminUserName">The admin user name</param>
+            <param name="adminPassword">The admin password</param>
+            <returns>The client instance</returns>
+        </member>
+        <member name="M:Membase.Management.MembaseManagementClientFactory.Create(System.String,System.String,System.Uri)">
+            <summary>
+            Creates a single client that does not support a pool.
+            </summary>
+            <param name="adminUserName">The admin user name</param>
+            <param name="adminPassword">The admin password</param>
+            <param name="managementEndpoint">
+            The management address, for example: http://localhost:8091
+            </param>
+            <returns>The client instance</returns>
+        </member>
+        <member name="M:Membase.Management.MembaseManagementClientFactory.Create(System.String,System.String,System.Uri[])">
+            <summary>
+            Creates a pooled client that does supports failover to a list of endpoints in a pool.
+            </summary>
+            <param name="adminUserName">The admin user name</param>
+            <param name="adminPassword">The admin password</param>
+            <param name="managementEndpoints">
+            The Membase management addresses in priority order.
+            </param>
+            <returns>The pooled client instance</returns>
+        </member>
+        <member name="M:Membase.Management.MembaseManagementClientFactory.Create(System.String,System.String,System.Collections.Generic.IEnumerable{System.Uri})">
+            <summary>
+            Creates a pooled client that does supports failover to a list of endpoints in a pool.
+            </summary>
+            <param name="adminUserName">The admin user name</param>
+            <param name="adminPassword">The admin password</param>
+            <param name="managementEndpoints">
+            The Membase management addresses in priority order.
+            </param>
+            <returns>The pooled client instance</returns>
+        </member>
+        <member name="T:Membase.Management.Impl.ManagementClient">
+            <summary>
+            Non-pooled base client for managing a Membase server instance.
+            </summary>
+            <remarks>
+            This class is thread safe.
+            </remarks>
+        </member>
+        <member name="M:Membase.Management.Impl.ManagementClient.#ctor(Membase.Management.Impl.IRestClient)">
+            <summary>
+            Creates a new management client for a specific URI.
+            </summary>
+            <param name="restClient">The REST gateway</param>
+        </member>
+        <member name="P:Membase.Management.Impl.ManagementClient.RestClient">
+            <summary>
+            The REST client gateway instance.
+            </summary>
+        </member>
+    </members>
+</doc>
