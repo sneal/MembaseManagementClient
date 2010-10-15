@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C3A6C3F9-4A97-465A-9204-EC47205BB308}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Membase.Management</RootNamespace>
+    <AssemblyName>Membase.Management</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BucketCreationDetails.cs" />
+    <Compile Include="Impl\ManagementClientPool.cs" />
+    <Compile Include="Impl\PooledManagementClient.cs" />
+    <Compile Include="Impl\HttpMethod.cs" />
+    <Compile Include="Impl\RestResponse.cs" />
+    <Compile Include="IMembaseManagementClient.cs" />
+    <Compile Include="Impl\IRestClient.cs" />
+    <Compile Include="Impl\MimeTypes.cs" />
+    <Compile Include="Impl\MembaseManagementRestException.cs" />
+    <Compile Include="Impl\ParameterBuilder.cs" />
+    <Compile Include="Impl\ResourceUris.cs" />
+    <Compile Include="Impl\RestClient.cs" />
+    <Compile Include="Impl\MembaseManagementConnectionException.cs" />
+    <Compile Include="MembaseManagementClientFactory.cs" />
+    <Compile Include="MembaseManagementException.cs" />
+    <Compile Include="Resources\Bucket.cs" />
+    <Compile Include="Resources\BucketRules.cs" />
+    <Compile Include="Resources\CacheRange.cs" />
+    <Compile Include="Resources\Node.cs" />
+    <Compile Include="Resources\Pool.cs" />
+    <Compile Include="Impl\ManagementClient.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Connection.cs" />
+    <Compile Include="Resources\Ports.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
